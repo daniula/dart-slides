@@ -1,0 +1,15 @@
+.slides.template-custom > article:not(.nobackground):not(.biglogo) {
+  background: url(dart-logo.png) 730px 620px no-repeat;
+  background-size: 160px;
+  background-color: white;
+} 
+
+.slides.template-custom article.biglogo {
+  background: white url(dart-logo.png) 50% 50% no-repeat;
+  background-size: 400px;
+}
+
+.bigger {
+    font-size: 140%;
+    line-height: 140%;
+}
