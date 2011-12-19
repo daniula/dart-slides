@@ -1,0 +1,91 @@
+* Dodać link / przykład kodu w JavaScript pokazujący problem z function scope.
+  Najlepiej dwie wersje: z błędem i work around omijający błąd.
+* Zamienić Demos na 3 wersje z iframe.
+* Dodać stronę z pytaniami i link do prezentacji na github.
+* Zamienić Dart discussion group na pełny link.
+* Dodać oddzielną grupę slajdów "Różnice między Dart, a JavaScript":
+    0. 
+      Lexical scope przenieść z code examples tutaj.
+    1.
+      In Dart an Array is called a List and you get an exception if you
+      try to get an item not present in the List:
+
+      main() {
+       var a = ['zero', 'uno'];
+       print(a[0]);
+       print(a[1]);
+       print(a[2]); // IndexOutOfRangeException: 2
+      }
+
+      In JavaScript and in Ruby for that matter, you get undefined and nil
+      respectively.
+  
+    2.
+      In Dart we have Maps that do about the same of what Objects do in
+      JavaScript, except that you cannot have integer as keys by default:
+
+      main() { // doesn't even run. Instead of 0 and 1 for keys, Dart
+      expects strings.
+       var o = {0: 'zero', 1: 'uno'};
+       print(o[0]);
+       print(o[1]);
+       print(o[2]);
+      }
+  
+    3.
+      In Dart there are two kinds of parameters, the first one resembles
+      the ones of other languages including JavaScript.
+
+      someFunction(someVariable) { }
+
+      For this one, the someVariable is expected as part of the signature of
+      the function. That function will only be called if the number of
+      parameters matches the number of the declared function. This is most
+      annoying when subscribing to events or callbacks that don't send back
+      the right number of parameters and your code stops working at some
+      generic place far away from the event subscription or some such.
+
+      var events;
+
+      callEvents() {
+       if (events !== null) {
+         for (var fn in events) { fn('someBogusParameter'); }
+       }
+      }
+
+      subscribe(fn) {
+       if (events === null) { events = []; }
+       events.add(fn);
+      }
+
+      main() {
+       // Not going to get called as the function doesn't have the right signature
+       // with 1 parameter.
+       subscribe(() => print("OK"));
+       // subscribe((ev) => print("OK"));
+       // subscribe(([ev]) => print("OK"));
+       callEvents();
+      }
+  
+    4.
+      In Dart, boolean expressions only return true or false. And if you
+      miss something during setting one up, it will most likely resolve to
+      false:
+
+      main() {
+       var name = "Herbert", age = 17;
+       print(name && age >= 17); // Prints false
+      }
+  
+      // In checked mode:  "Failed type check: type String is not assignable to type bool"
+  
+      ===
+  
+      main() {
+       var name = "Herbert", age = 17;
+       print(name !== null && age >= 17);
+      }
+  
+    5.
+      At the moment Dart doesn't have variadic parameters so we don't
+      have all of those generic arguments handling of JavaScript.
