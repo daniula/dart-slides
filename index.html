@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hack&amp;Learn – Dart</title>
+
+    <meta charset='utf-8'>
+    <script src='http://html5slides.googlecode.com/svn/trunk/slides.js'></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  
+  <style>
+    .special-center {
+      width: 450px;
+      margin: 70px auto 0 auto;
+    }
+  </style>
+
+  <body style='display: none'>
+    <section class='slides layout-regular template-custom'>
+      
+      <article class='biglogo'></article>
+
+      <article>
+        <h1>Hack&amp;Learn<br/>Dart</h1>
+        <p><a href="http://about.me/daniel.mendalka">Daniel Mendalka</a><br/>Dec 17, 2011</p>
+      </article>
+      
+      <article class="build">
+          <h3>About Dart in general</h3>
+          <p>Public preview on October 10 – only 2 months 1 week old!</p>
+          <p class="bigger special-center">Dart &raquo; JavaScript<br/>Java &raquo; C</p>
+          <p class="bigger special-center">Java + JavaScript = Dart</p>
+      </article>
+      
+      <article>
+        <h3>Dart in nutshell</h3>
+        <q>Purely Object-Oriented, optionally typed, class-based, single inheritance with actor-based concurrency.</q>
+        <div class='author'>Gilad Bracha</div>
+      </article>
+      
+      <article>
+        <h3>Dart in nutshell</h3>
+        <ul class="build">
+          <li>
+            <b>Object-Oriented</b>
+            <ul>
+              <li>Everything is an Object</li>
+              <li>No primitives – null, int, double, num, … are objects</li>
+            </ul>
+          </li>
+          <li>
+            <b>Optionally typed</b>
+            <ul>
+              <li>Use var or &lt;classname&gt; for creating variable</li>
+              <li>Classes don't influance on runtime</li>
+              <li>Use Checked Mode if you need stop compilation on incompatible class error</li>
+              <li>"Guilty until proven innocent" – "Innocent until proven guilty"</li>
+            </ul>
+          </li>
+      </article>
+      
+      <article>
+        <h3>Dart in nutshell</h3>
+        <ul class="build">
+          <li>
+            <b>Class-based</b>
+            <ul>
+              <li><code>class</code> &amp; <code>extends</code></li>
+              <li><code>interface</code> &amp; <code>implements</code></li>
+            </ul>
+          </li>
+          <li><b>Single inheritance</b></li>
+          <li>
+            <b>Actor-based concurrency</b>
+            <ul>
+              <li>Dart is single threaded</li>
+              <li>Inspired by Erlang, use Isolates for concurrency</li>
+              <li>Each isolate is seperate process</li>
+              <li>Nothing is shared</li>
+              <li>All communication via messages</li>
+            </ul>
+          </li>
+        </ul>
+      </article>
+      
+      <article>
+        <h3>Performance</h3>
+        <p>Not yet, consider it as a feature to add in the future.</p>
+        <table>
+          <tr>
+            <th>Benchmark</th><th>VM</th><th>DartC</th>
+          </tr>
+          <tr>
+            <td>Mandelbrot</td><td>18.2%</td><td>88.7%</td>
+          </tr>
+          <tr>
+            <td>DeltaBlue</td><td>56.6%</td><td>52.2%</td>
+          </tr>
+          <tr>
+            <td>Richards</td><td>56.0%</td><td>70.9%</td>
+          </tr>
+          <tr>
+            <td>NBody</td><td>35.8%</td><td>63.6%</td>
+          </tr>
+          <tr>
+            <td>BinaryTrees</td><td>77.3%</td><td>104.3%</td>
+          </tr>
+          <tr>
+            <td>Fannkuch</td><td>53.8%</td><td>22.3%</td>
+          </tr>
+          <tr>
+            <td>Meteor</td><td>50.3%</td><td>42.1%</td>
+          </tr>
+          <div class="source">Octobet 19, 2011</div>
+        </table>
+      </article>
+
+      <article>
+        <h2>Code examples</h2>
+      </article>
+      
+      <article>
+        <h3>Hello, World</h3>
+        <section class="build">
+          <pre>
+main() {
+  print('Hello, World');
+}
+          </pre>
+          <pre>
+main() => print('Hello, World');
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>String interpolation</h3>
+        <section>
+          <pre>
+main() {
+  var s1 = 'Hello';
+  var s2 = 'World';
+
+  print(s1 + ', ' + s2);
+  print('$s1, $s2');
+  
+  var count = 0;
+  print('$s1, $s2 ${count+1}');
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Class + getter &amp; setter</h3>
+        <section>
+          <pre>
+class Greeter {
+  String _prefix = 'Hello,';          // Hidden instance variable.
+  String get prefix() => _prefix;     // Getter for prefix.
+  void set prefix(String value) {     // Setter for prefix.
+    if (value == null) value = "";
+    _prefix = value;
+  }
+  
+  greet(name) {
+    print('$prefix $name');
+  }
+}
+
+main() {
+  var greeter = new Greeter();
+  greeter.prefix = 'Howdy,';
+  greeter.greet('setter!');
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Named constructors</h3>
+        <section>
+          <pre>
+class Greeter {
+  //(...)
+  Greeter();
+  Greeter.withPrefix(this.prefix);
+  //(...)
+}
+
+main() {
+  var greeter = new Greeter.withPrefix('Howdy,');
+  greeter.greet('setter!');
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Another trick with constructors</h3>
+        <section>
+          <pre>
+class Rect {
+  var x,y;
+  Rect(this.x,this.y);
+  String toString() => "${this.x},${this.y}";
+}
+
+class Square extends Rect {
+  Square(x) : super(x,x);
+}
+
+main() {
+  print(new Rect(1,2));
+  print(new Square(2));
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Operator Overloading #1</h3>
+        <section>
+          <pre>
+class Point {
+  var x, y;  
+  Point(this.x, this.y);
+  operator +(Point second) {
+    return new Point(this.x + second.x, this.y + second.y);
+  }
+
+  String toString() => '${this.x},${this.y}';
+}
+
+main() {
+  Point p = new Point(2, 3);
+  Point q = new Point(3, 4);
+  print(p + q);
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Operator Overloading #2</h3>
+        <section>
+          <pre>
+class Point {
+  var x, y;  
+  Point(this.x, this.y);
+  operator ==(Point second) {
+    return (this.x == second.x &amp;&amp; this.y == second.y);
+  }
+}
+
+main() {
+  print(new Point(2, 3) == new Point(2, 3));
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Optional &amp; Named Parameters</h3>
+        <section>
+          <pre>
+hello(msg, to, [from]) => '$from sent $msg to $to';
+
+main() {
+  print(hello('Hi', 'Daniel')); //null sent Hi to Daniel
+  print(hello('Hi', from:'Daniel', to:'World')); //Daniel sent Hi to World
+}
+          </pre>
+          <pre>
+hello(msg, to, [from='Me']) => '$from sent $msg to $to';
+
+main() {
+  print(hello('Hi', 'Daniel')); //Me sent Hi to Daniel
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Lexical scope</h3>
+        <section>
+          <pre>
+// Javascript prints: "3, 3, 3"
+// Dart prints: "1, 2, 3"
+main() {
+  var callbacks = [];
+  for(var text in [1, 2, 3]) {
+    callbacks.add(() => print(text));
+  }
+
+  for (var callback in callbacks) {
+    callback();
+  }
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Isolate</h3>
+        <section>
+          <pre>
+class Printer extends Isolate {
+  main() {
+    port.receive((message, replyTo) {
+      if (message == null) port.close();
+      else print(message);
+    });
+  }
+}
+
+main() {
+  new Printer().spawn().then((port) {
+    for (var message in ['Hello', 'from', 'other', 'isolate']) {
+      port.send(message);  
+    }
+    port.send(null);
+  });
+}
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>Libraries</h3>
+        <section>
+          <pre>
+#import('dart:html');
+#import('dart:core');
+
+//import another library
+#import('customLibrary.dart'); 
+
+//import library from external server
+#import("http://dartwatch.com/externalLibrary.dart"); 
+
+//import library with prefix
+#import("myOtherLibrary.dart", prefix:"lib");
+          </pre>
+          <pre>
+#library('mylibrary'); //define library name
+#source('fileAsPartOfLibrary.dart'); //include files into library;
+#source('secondFileAsPartOfLibrary.dart');
+          </pre>
+        </section>
+      </article>
+      
+      <article>
+        <h3>New MIME type and inline Dart code</h3>
+        <section>
+          <pre>
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;script type="application/dart"&gt;
+      main() {
+        Element element = document.getElementById('message');
+        element.innerHTML = 'Hello from Dart';
+      }     
+    &lt;/script&gt;
+    &lt;div id="message"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+          </pre>
+        </section>
+      </article>
+
+      <article>
+        <h3>Demos</h3>
+        <ul>
+          <li><a href="http://www.dartlang.org/samples/sunflower/sunflower-js.html" target="_blank">Sunflower</a></li>
+          <li><a href="http://www.dartlang.org/samples/spirodraw/spirodraw-js.html" target="_blank">Spirodraw</a></li>
+          <li><a href="http://total-dart.appspot.com/" target="_blank">Total</a></li>
+        </ul>
+      </article>
+      
+      <article>
+        <h3>Tools</h3>
+        <ul>
+          <li><a href="http://try.dartlang.org/">try.dartlang.org</a></li>
+          <li><a href="http://www.dartlang.org/docs/getting-started/editor/index-macos.html">Dart Editor</a></li>
+          <li>
+              <b>Dartium</b>
+              <ul>
+                <li><a href="http://code.google.com/p/dart/wiki/PreparingYourMachine">Prepare</a><li>
+                <li><a href="http://dev.chromium.org/developers/how-tos/install-depot-tools">depot_tools</a><li>
+                <li><a href="http://code.google.com/p/dart/wiki/BuildingDartium">Building Dartium</a></li>
+              </ul>
+          </li>
+        </ul>
+      </article>
+      
+      
+      <article class="smaller">
+        <h3>Dark side</h3>
+        <q>Some examples, like Dart, portend that JavaScript has fundamental flaws and to support these scenarios requires a 'clean break' from JavaScript in both syntax and runtime. We disagree with this point of view.</q>
+        <div class="author">Microsoft's JavaScript team</div>
+      </article>
+      
+      <article class="smaller">
+        <h3>Dark side</h3>
+        <q>Adding an additional web facing language (that isn't standardized) doesn't seem beneficial to the project, if anything it seems harmful (cf. VBScript in IE)</q>
+        <div class="author">Oliver Hunt (Webkit, Apple)</div>
+      </article>
+      
+      <article class="smaller">
+        <h3>Dark side</h3>
+        <q style="font-size: 90%;">I guarantee you that Apple and Microsoft (and Opera and Mozilla, but the first two are enough) will never embed the Dart VM. So 'Works best in Chrome' and even 'Works only in Chrome' are new norms promulgated intentionally by Google. We see more of this fragmentation every day. As a user of Chrome and Firefox (and Safari), I find it painful to experience, never mind the political bad taste.</q>
+        <div class="author">Brendan Eich</div>
+      </article>
+      
+      <article>
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://www.dartlang.org/" target="_blank">www.dartlang.org</a></li>
+          <li><a href="http://www.dartlang.org/slides/" target="_blank">www.dartlang.org/slides/</a></li>
+          <li><a href="http://dart.googlecode.com/" target="_blank">dart.googlecode.com</a></li>
+          <li><a href="http://blog.sethladd.com/" target="_blank">Seth Ladd's blog</a></li>
+          <li><a href="https://plus.google.com/s/%23dartlang" target="_blank">#dartlang on Google+</a></li>
+          <li><a href="http://dartwatch.com/" target="_blank">Dartwatch</a></li>
+          <li><a href="http://dartweekly.com/" target="_blank">Dart Weekly</a></li>
+          <li><b><a href="https://groups.google.com/a/dartlang.org/group/misc/topics" target="_blank">Dart discussion group</a></b></li>
+        </ul>
+      </article>
+      
+    </section>
+    
+
+  </body>
+</html>
