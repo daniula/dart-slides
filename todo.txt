@@ -3,10 +3,19 @@
 * Zamienić Demos na 3 wersje z iframe.
 * Dodać stronę z pytaniami i link do prezentacji na github.
 * Zamienić Dart discussion group na pełny link.
+* Dodać info o noSuchMethod()
+* Obczaić różnice między zwykłym constructor, a default/factory
+* Podmienić na lepszy przykład o opcjonalnych i nazywanych parametrach:
+    draw([x = 0, y = 0, width = 100, height = 100]) {
+      print('draw at $x, $y, $width, $height');
+    }
+    draw(x: 10, width: 200); // Can mix and match which args are provided.
 * Dodać oddzielną grupę slajdów "Różnice między Dart, a JavaScript":
     0. 
       Lexical scope przenieść z code examples tutaj.
     1.
+      Fun fact: As of 2011-12-22, the word "array" does not appear in the Dart spec.
+      http://blog.sethladd.com/2011/12/lists-and-arrays-in-dart.html
       In Dart an Array is called a List and you get an exception if you
       try to get an item not present in the List:
 
@@ -85,7 +94,22 @@
        var name = "Herbert", age = 17;
        print(name !== null && age >= 17);
       }
+      
+      === Specificatoion: ===
+      
+      10.4.1 Boolean Conversion
+      Boolean conversion maps any object o into a boolean defined as
+      (bool v) {
+        return true === v;
+      }(o)
   
     5.
       At the moment Dart doesn't have variadic parameters so we don't
       have all of those generic arguments handling of JavaScript.
+
+* Trick: dynamic loading can be done via isolates (try to hack&learn it)
+* Dodać dział work in progress:
+* Comments & docs comments
+* Author: Seldaiendil D. Flourite (Dart Discussion Group)
+	Java is good for Desktop apps, Desktop services and Desktop widgets.
+	Dart is good for Web apps, Web services and Web widgets.
