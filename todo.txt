@@ -1,9 +1,11 @@
 * Dodać link / przykład kodu w JavaScript pokazujący problem z function scope.
   Najlepiej dwie wersje: z błędem i work around omijający błąd.
+* Dodać do sources info o On Dart https://plus.google.com/u/0/113649577593294551754/posts
 * Zamienić Demos na 3 wersje z iframe.
 * Dodać stronę z pytaniami i link do prezentacji na github.
 * Zamienić Dart discussion group na pełny link.
 * Dodać info o noSuchMethod()
+* no class- or instance-private members in Dart.
 * Obczaić różnice między zwykłym constructor, a default/factory
 * Podmienić na lepszy przykład o opcjonalnych i nazywanych parametrach:
     draw([x = 0, y = 0, width = 100, height = 100]) {
@@ -113,3 +115,11 @@
 * Author: Seldaiendil D. Flourite (Dart Discussion Group)
 	Java is good for Desktop apps, Desktop services and Desktop widgets.
 	Dart is good for Web apps, Web services and Web widgets.
+* Show error & warning example for debugging: http://try.dartlang.org/s/AUcl
+    bounce(callback(v)) {
+     callback(123);
+    }
+    main() {
+    // NoSuchMethodException - receiver: '' function name: '' arguments: []]
+     bounce(() => print("Hello")); // Warning and error?
+    }
