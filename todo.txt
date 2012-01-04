@@ -4,6 +4,7 @@
 * Zamienić Demos na 3 wersje z iframe.
 * Dodać stronę z pytaniami i link do prezentacji na github.
 * Zamienić Dart discussion group na pełny link.
+* Dodać info o 
 * Dodać info o noSuchMethod()
 * no class- or instance-private members in Dart.
 * Obczaić różnice między zwykłym constructor, a default/factory
